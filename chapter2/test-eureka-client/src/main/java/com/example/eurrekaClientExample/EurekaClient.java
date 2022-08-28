@@ -27,8 +27,8 @@ public class EurekaClient {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> restExchange =
                 restTemplate.exchange(
-                        "http://logical-service-id/name/" + firstName +
-                                lastName, HttpMethod.GET, null, String.class,
+                        "http://logical-service-id/name/" + "/" + firstName +
+                                "/" + lastName, HttpMethod.GET, null, String.class,
                         firstName, lastName);
         return restExchange.getBody();
     }

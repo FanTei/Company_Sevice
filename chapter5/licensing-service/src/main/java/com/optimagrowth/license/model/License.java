@@ -33,7 +33,7 @@ public class License extends RepresentationModel<License> {
     @Column(name = "comment")
     private String comment;
 
-    private License withComment(String comment) {
+    public License withComment(String comment) {
         this.setComment(comment);
         return this;
     }

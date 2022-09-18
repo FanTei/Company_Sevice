@@ -5,3 +5,11 @@ management:
     health:
       show-components: always
       show-details: always
+spring:
+  application:
+    name: licensing-service
+  profiles:
+    active: dev
+  cloud:
+    config:
+      uri: http://configserver:9091

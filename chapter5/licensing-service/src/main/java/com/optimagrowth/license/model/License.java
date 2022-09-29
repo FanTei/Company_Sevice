@@ -4,10 +4,7 @@ import lombok.Data;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.hateoas.RepresentationModel;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 //POJO object
 @Data
@@ -16,6 +13,7 @@ import javax.persistence.Table;
 public class License extends RepresentationModel<License> {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "license_id", nullable = false)
     private String licenseId;
 

@@ -48,7 +48,6 @@ public class LicenseServiceImpl implements LicenseService {
     public License updateLicense(License license) {
         licenseRepository.save(license);
         return license.withComment(config.getProperty());
-
     }
 
     public String deleteLicense(String licenseId) {

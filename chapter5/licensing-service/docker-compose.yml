@@ -7,6 +7,6 @@ services:
     expose:
       - 8888
     environment:
-      - "SPRING_PROFILES_ACTIVE=dev"
-      - "SPRING_CLOUD_CONFIG_URI=9091"
+        SPRING_PROFILES_ACTIVE: "dev"
+        SPRING_CLOUD_CONFIG_URI: "http://configserver:9091"
 

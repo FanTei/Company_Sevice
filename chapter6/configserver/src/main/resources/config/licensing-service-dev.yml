@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    username: postgres
+    url: jdbc:postgresql://localhost:5432/ostock_dev
+    password: '0520'
+  jpa:
+    generate-ddl: 'true'
+    hibernate:
+      ddl-auto: create
+  database:
+    driverClassName: org.postgresql.Driver
+example:
+  property: I AM DEV

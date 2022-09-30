@@ -1,0 +1,12 @@
+example:
+  property: I AM THE PROD
+spring:
+  datasource:
+    url: jdbc:postgresql://database:5432/ostock_prod
+    username: postgres
+    password: 0520
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create

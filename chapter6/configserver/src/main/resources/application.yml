@@ -11,8 +11,7 @@ spring:
       server:
         native:
           search-locations: classpath:/config
-encrypt:
-  key: secretkey
+
 management:
   endpoints:
     web:

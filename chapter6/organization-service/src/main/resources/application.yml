@@ -1,11 +1,11 @@
 spring:
   application:
-    name: organization-service
+      name: organization-service
   profiles:
     active: dev
   cloud:
     config:
-      uri: http://configserver:9091
+      uri: http://localhost:9091
   config:
     import: "optional:configserver:"
 

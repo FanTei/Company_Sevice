@@ -11,4 +11,3 @@ spring:
       ddl-auto: create
   database:
     driverClassName: org.postgresql.Driver
-

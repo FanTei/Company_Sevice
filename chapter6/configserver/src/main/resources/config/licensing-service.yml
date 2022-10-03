@@ -28,8 +28,9 @@ eureka:
   client:
     fetchRegistry: 'true'
     registerWithEureka: 'true'
-    service-url:
-      default-zone: http://eurekaserver:9092/eureka/
+    serviceUrl:
+      defaultZone: http://localhost:9092/eureka/
+
 
 
 management:

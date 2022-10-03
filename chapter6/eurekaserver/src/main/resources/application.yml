@@ -6,6 +6,7 @@ spring:
       uri: http://localhost:9091
   config:
     import: "optional:configserver:"
+
 ribbon:
   eureka:
     enabled: false

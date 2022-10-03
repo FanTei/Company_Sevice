@@ -26,7 +26,7 @@ public class LicenseController {
             @PathVariable("organizationId") String organizationId,
             @PathVariable("licenseId") String licenseId
     ) {
-        License license = licenseService.getLicense(licenseId, organizationId);
+        License license = licenseService.getLicense(licenseId, organizationId, clientType);
         license.add(linkTo(methodOn(LicenseController.class)
                         .getLicense(organizationId, license.getLicenseId()))
                         .withSelfRel(),
@@ -42,7 +42,13 @@ public class LicenseController {
 
         return ResponseEntity.ok(license);
     }
+    @GetMapping("/{licenseId}/{clientType}")
+    public License getLicenceWithClient(@PathVariable String clientType,
+                                        @PathVariable String licenseId,
+                                        @PathVariable String organizationId){
+        return licenseService.getLicense(licenseId,organizationId,clientType);
 
+    }
     @PutMapping
     public ResponseEntity<License> updateLicense(
             @PathVariable("organizationId") String organizationId,

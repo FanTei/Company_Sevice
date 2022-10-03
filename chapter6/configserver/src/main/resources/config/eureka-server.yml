@@ -1,22 +1,23 @@
-server:
-  port: 9092
+
 spring:
   application:
     name: eureka-server
   boot:
     admin:
       context-path: /admin
-
+server:
+  port: 9092
 eureka:
   instance:
     hostname: eurekaserver
   client:
     registerWithEureka: false
     fetchRegistry: false
-    service-url:
-      default-zone: http://${eureka.instance.hostname}:${server.port}/eureka/
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
   server:
     waitTimeInMsWhenSyncEmpty: 5
+
 
 management:
   endpoints:

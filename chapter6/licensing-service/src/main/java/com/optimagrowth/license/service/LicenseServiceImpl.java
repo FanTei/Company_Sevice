@@ -3,16 +3,11 @@ package com.optimagrowth.license.service;
 import com.optimagrowth.license.config.ServiceConfig;
 import com.optimagrowth.license.model.License;
 
-import java.util.Locale;
-
+import com.optimagrowth.license.model.Organization;
 import com.optimagrowth.license.repository.LicenseRepository;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
-import java.util.Locale;
-import java.util.Random;
 import java.util.UUID;
 
 @Service
@@ -29,12 +24,21 @@ public class LicenseServiceImpl implements LicenseService {
         this.config = config;
     }
 
-    public License getLicense(String licenseId, String organizationId) {
-        License license = licenseRepository.findByOrganizationIdAndLicenseId(organizationId, licenseId);
-        if (license == null) {
-            throw new IllegalArgumentException(String.format(messages.getMessage(
-                            "license.search.error.message", null, null),
+    public License getLicense(String licenseId, String organizationId, String clientType) {
+        License license = licenseRepository.findByOrganizationIdAndLicenseId
+                (organizationId, licenseId);
+        if (null == license) {
+            throw new IllegalArgumentException(String.format(
+                    messages.getMessage("license.search.error.message", null, null),
                     licenseId, organizationId));
+        }
+        Organization organization = retrieveOrganizationInfo(organizationId,
+                clientType);
+        if (null != organization) {
+            license.setOrganizationName(organization.getName());
+            license.setContactName(organization.getContactName());
+            license.setContactEmail(organization.getContactEmail());
+            license.setContactPhone(organization.getContactPhone());
         }
         return license.withComment(config.getProperty());
     }
@@ -58,5 +62,29 @@ public class LicenseServiceImpl implements LicenseService {
         responseMessage = String.format(messages.getMessage(
                 "license.delete.message", null, null), licenseId);
         return responseMessage;
+    }
+
+    private Organization retrieveOrganizationInfo(String organizationId, String clientType) {
+        Organization organization = null;
+
+        switch (clientType) {
+            case "feign":
+                System.out.println("I am using the feign client");
+                organization = organizationFeignClient.getOrganization(organizationId);
+                break;
+            case "rest":
+                System.out.println("I am using the rest client");
+                organization = organizationRestClient.getOrganization(organizationId);
+                break;
+            case "discovery":
+                System.out.println("I am using the discovery client");
+                organization = organizationDiscoveryClient.getOrganization(organizationId);
+                break;
+            default:
+                organization = organizationRestClient.getOrganization(organizationId);
+                break;
+        }
+
+        return organization;
     }
 }

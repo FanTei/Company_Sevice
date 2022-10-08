@@ -20,6 +20,6 @@ ADD . $HOME
 
 RUN ["mvn", "package"]
 
-EXPOSE 9090
+EXPOSE 9094
 
-CMD ["java", "-jar", "./target/licensing-service-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "./target/organization-service-0.0.1-SNAPSHOT.jar"]

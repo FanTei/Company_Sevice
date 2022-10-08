@@ -15,6 +15,7 @@ import com.optimagrowth.license.model.Organization;
 @Component
 public class OrganizationDiscoveryClient {
 
+
     private final DiscoveryClient discoveryClient;
 
     public OrganizationDiscoveryClient(DiscoveryClient discoveryClient) {

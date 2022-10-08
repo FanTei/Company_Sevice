@@ -1,3 +1,5 @@
+server:
+  port: 9090
 spring:
   application:
     name: licensing-service
@@ -8,8 +10,6 @@ spring:
       uri: http://localhost:9091
   config:
     import: "optional:configserver:"
-
-
 
 
 

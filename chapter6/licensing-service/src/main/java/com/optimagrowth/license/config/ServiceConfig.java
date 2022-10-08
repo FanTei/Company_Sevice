@@ -1,14 +1,16 @@
 package com.optimagrowth.license.config;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Configuration
-@Getter
-@Setter
-@ConfigurationProperties(prefix= "example")
-public class ServiceConfig {
+@ConfigurationProperties(prefix = "example")
+@Getter @Setter
+public class ServiceConfig{
+
     private String property;
+
 }

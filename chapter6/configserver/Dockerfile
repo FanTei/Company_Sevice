@@ -1,14 +1,42 @@
-FROM openjdk:17-oracle as build
-WORKDIR application
-LABEL maintrainer = "FanaTei"
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} application.jar
-RUN java -Djarmode=layertools -jar application.jar extract
-FROM openjdk:17-oracle
-WORKDIR application
+FROM maven:3.8.3-openjdk-17
 
-COPY --from=build application/dependencies/ ./
-COPY --from=build application/spring-boot-loader/ ./
-COPY --from=build application/snapshot-dependencies/ ./
-COPY --from=build application/application/ ./
-ENTRYPOINT ["java", "org.springframework.boot.loader.JarLauncher"]
+ENV HOME=/home/usr/app
+
+RUN mkdir -p $HOME
+
+WORKDIR $HOME
+
+# 1. add pom.xml only here
+
+ADD pom.xml $HOME
+
+# 2. start downloading dependencies
+
+RUN ["/usr/local/bin/mvn-entrypoint.sh", "mvn", "verify", "clean", "--fail-never"]
+
+# 3. add all source code and start compiling
+
+ADD . $HOME
+
+RUN ["mvn", "package"]
+
+EXPOSE 9091
+
+CMD ["java", "-jar", "./target/configserver-0.0.1-SNAPSHOT.jar"]
+
+
+#FROM maven:3.8.3-openjdk-17 AS builder
+#
+#COPY . /app
+#
+#WORKDIR /app
+#
+#RUN ["mvn", "clean", "package"]
+#
+#FROM openjdk:17
+#
+#COPY --from=builder /app/target/configserver-0.0.1-SNAPSHOT.jar /application/configserver-0.0.1-SNAPSHOT.jar
+#
+#WORKDIR /application
+#
+#CMD ["java", "-jar", "configserver-0.0.1-SNAPSHOT.jar"]

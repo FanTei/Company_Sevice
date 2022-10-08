@@ -1,10 +1,10 @@
 FROM maven:3.8.3-openjdk-17
-
 ENV HOME=/home/usr/app
-
 RUN mkdir -p $HOME
-
 WORKDIR $HOME
+
+
+
 
 # 1. add pom.xml only here
 
@@ -20,6 +20,6 @@ ADD . $HOME
 
 RUN ["mvn", "package"]
 
-EXPOSE 9090
+EXPOSE 9092
 
-CMD ["java", "-jar", "./target/licensing-service-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "./target/eurekaserver-0.0.1-SNAPSHOT.jar"]

@@ -1,12 +1,12 @@
-
+server:
+  port: 9092
 spring:
   application:
     name: eureka-server
   boot:
     admin:
       context-path: /admin
-server:
-  port: 9092
+
 eureka:
   instance:
     hostname: eurekaserver

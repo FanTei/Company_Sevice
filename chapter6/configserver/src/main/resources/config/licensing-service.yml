@@ -31,8 +31,6 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:9092/eureka/
 
-
-
 management:
   endpoints:
     web:

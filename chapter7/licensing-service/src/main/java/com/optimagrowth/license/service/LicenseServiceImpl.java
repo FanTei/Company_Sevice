@@ -7,11 +7,18 @@ import com.optimagrowth.license.repository.LicenseRepository;
 import com.optimagrowth.license.service.client.OrganizationDiscoveryClient;
 import com.optimagrowth.license.service.client.OrganizationFeignClient;
 import com.optimagrowth.license.service.client.OrganizationRestTemplateClient;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
+import java.util.concurrent.TimeoutException;
+import org.slf4j.Logger;
+
+
 
 @Service
 
@@ -28,7 +35,7 @@ public class LicenseServiceImpl implements LicenseService {
     private final OrganizationRestTemplateClient organizationRestClient;
 
     private final OrganizationDiscoveryClient organizationDiscoveryClient;
-
+    private static final Logger logger = LoggerFactory.getLogger(LicenseService.class);
     public LicenseServiceImpl(MessageSource messages, LicenseRepository licenseRepository, ServiceConfig config, OrganizationFeignClient organizationFeignClient,
                               OrganizationRestTemplateClient organizationRestClient, OrganizationDiscoveryClient organizationDiscoveryClient) {
         this.messages = messages;
@@ -102,8 +109,23 @@ public class LicenseServiceImpl implements LicenseService {
         return responseMessage;
 
     }
-
-    public List<License> getLicensesByOrganization(String organizationId) {
+    private void randomlyRunLong() throws TimeoutException {
+        Random rand = new Random();
+        int randomNum = rand.nextInt(3) + 1;
+        if (randomNum==3) sleep();
+    }
+    private void sleep() throws TimeoutException{
+        try {
+            System.out.println("Sleep");
+            Thread.sleep(5000);
+            throw new java.util.concurrent.TimeoutException();
+        } catch (InterruptedException e) {
+            logger.error(e.getMessage());
+        }
+    }
+    @CircuitBreaker(name = "licenseService")
+    public List<License> getLicensesByOrganization(String organizationId) throws TimeoutException {
+        randomlyRunLong();
         return licenseRepository.findByOrganizationId(organizationId);
     }
 }

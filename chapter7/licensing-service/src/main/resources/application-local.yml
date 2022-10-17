@@ -6,3 +6,7 @@ spring:
       uri: http://localhost:9091
   config:
     import: "optional:configserver:"
+logging:
+  level:
+    org.springframework.web: WARN
+    com.optimagrowth: DEBUG

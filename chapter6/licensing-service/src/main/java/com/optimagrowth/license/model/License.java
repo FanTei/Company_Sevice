@@ -13,7 +13,6 @@ import javax.persistence.*;
 public class License extends RepresentationModel<License> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "license_id", nullable = false)
     private String licenseId;
 

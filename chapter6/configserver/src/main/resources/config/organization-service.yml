@@ -9,8 +9,8 @@ spring:
     database: POSTGRESQL
     hibernate:
       naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
-      ddl-auto: none
-    show-sql: 'true'
+      ddl-auto: create
+      show-sql: 'true'
   datasource:
     testWhileIdle: 'true'
     validationQuery: SELECT 1
@@ -28,9 +28,6 @@ eureka:
   client:
     fetchRegistry: 'true'
     registerWithEureka: 'true'
-    serviceUrl:
-      defaultZone: http://eurekaserver:9092/eureka/
-
 
 management:
   endpoints:

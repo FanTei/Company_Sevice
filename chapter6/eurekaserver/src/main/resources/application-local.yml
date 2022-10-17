@@ -9,14 +9,3 @@ spring:
         enabled: false
   config:
     import: "optional:configserver:"
-
-
-
-
-
-
-
-
-
-
-

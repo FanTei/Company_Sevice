@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: organization-service
+  cloud:
+    config:
+      uri: http://configserver:9091
+  config:
+    import: "optional:configserver:"

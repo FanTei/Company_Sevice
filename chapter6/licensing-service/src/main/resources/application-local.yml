@@ -1,18 +1,8 @@
-server:
-  port: 9090
 spring:
   application:
     name: licensing-service
-  profiles:
-    active: dev
   cloud:
     config:
       uri: http://localhost:9091
   config:
     import: "optional:configserver:"
-
-
-
-
-
-

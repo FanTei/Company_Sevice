@@ -1,14 +1,12 @@
 example:
-  property: I AM DEV
+  property: DEV
 spring:
   datasource:
     username: postgres
-    url: jdbc:postgresql://localhost:5432/ostock_dev
+    url: jdbc:postgresql://database:5432/ostock_dev
     password: '0520'
-  jpa:
-    generate-ddl: 'true'
-    hibernate:
-      ddl-auto: create
-  database:
-    driverClassName: org.postgresql.Driver
 
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eurekaserver:9092/eureka/

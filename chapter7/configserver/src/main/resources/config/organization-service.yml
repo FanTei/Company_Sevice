@@ -53,7 +53,7 @@ resilience4j.circuitbreaker:
         - java.io.IOException
         - java.util.concurrent.TimeoutException
         - org.springframework.web.client.ResourceAccessException
-    organizationService:
+    licensingService:
       registerHealthIndicator: true
       ringBufferSizeInClosedState: 6
       ringBufferSizeInHalfOpenState: 4

@@ -29,6 +29,11 @@ eureka:
     fetchRegistry: 'true'
     registerWithEureka: 'true'
 
+logging:
+  level:
+    org.springframework.web: WARN
+    com.optimagrowth: DEBUG
+
 management:
   endpoints:
     web:

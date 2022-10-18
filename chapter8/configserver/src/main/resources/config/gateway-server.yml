@@ -23,6 +23,11 @@ spring:
           filters:
             - RewritePath=/license/(?<path>.*), /$\{path}
 
+logging:
+  level:
+    org.springframework.web: WARN
+    com.optimagrowth: DEBUG
+
 eureka:
   instance:
     preferIpAddress: true

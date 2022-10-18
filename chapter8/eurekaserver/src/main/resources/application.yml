@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: eureka-server
+    loadbalancer:
+      ribbon:
+        enabled: false

@@ -1,6 +1,7 @@
 package com.optimagrowth.license.service.client;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import org.keycloak.adapters.springsecurity.client.KeycloakRestTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -10,10 +11,10 @@ import org.springframework.web.client.RestTemplate;
 import com.optimagrowth.license.model.Organization;
 
 @Component
-public class OrganizationRestTemplateClient {
-    private final RestTemplate restTemplate;
+public class  OrganizationRestTemplateClient  {
+    private final KeycloakRestTemplate restTemplate;
 
-    public OrganizationRestTemplateClient(RestTemplate restTemplate) {
+    public OrganizationRestTemplateClient(KeycloakRestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 

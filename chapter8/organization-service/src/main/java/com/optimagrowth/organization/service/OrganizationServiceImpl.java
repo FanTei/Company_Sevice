@@ -16,7 +16,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     @Override
     public Organization findById(String organizationId) {
-        Optional<Organization> opt = repository.findById(organizationId);
+        Optional<Organization> opt = repository.findByOrganizationId(organizationId);
         return opt.orElse(null);
     }
 

@@ -17,8 +17,11 @@ import com.optimagrowth.license.service.LicenseService;
 @RequestMapping(value="v1/organization/{organizationId}/license")
 public class LicenseController {
 
-    @Autowired
-    private LicenseService licenseService;
+    private final LicenseService licenseService;
+
+    public LicenseController(LicenseService licenseService) {
+        this.licenseService = licenseService;
+    }
 
     @GetMapping(value="/{licenseId}")
     public ResponseEntity<License> getLicense( @PathVariable("organizationId") String organizationId,

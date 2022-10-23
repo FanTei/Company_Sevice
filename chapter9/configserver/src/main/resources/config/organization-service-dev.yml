@@ -10,3 +10,7 @@ spring:
     generate-ddl: 'true'
     hibernate:
       ddl-auto: create
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eurekaserver:9092/eureka/

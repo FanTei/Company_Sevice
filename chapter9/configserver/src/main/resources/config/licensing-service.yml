@@ -94,3 +94,13 @@ resilience4j.thread-pool-bulkhead:
       coreThreadPoolSize: 1
       queueCapacity: 1
       keepAliveDuration: 20ms
+
+keycloak:
+  auth-server-url: http://keycloak:8080/auth
+  credentials:
+    secret: 5988f899-a5bf-4f76-b15f-f1cd0d2c81ba
+  realm: spmia-realm
+  bearer-only: 'true'
+  use-resource-role-mappings: 'true'
+  ssl-required: external
+  resource: ostock

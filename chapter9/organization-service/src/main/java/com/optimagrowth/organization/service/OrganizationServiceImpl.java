@@ -3,6 +3,7 @@ package com.optimagrowth.organization.service;
 import com.optimagrowth.organization.model.Organization;
 import com.optimagrowth.organization.repository.OrganizationRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -31,8 +32,9 @@ public class OrganizationServiceImpl implements OrganizationService {
         repository.save(organization);
     }
 
+    @Transactional
     @Override
-    public void delete(Organization organization) {
-        repository.delete(organization);
+    public void delete(String organizationId) {
+        repository.deleteByOrganizationId(organizationId);
     }
 }

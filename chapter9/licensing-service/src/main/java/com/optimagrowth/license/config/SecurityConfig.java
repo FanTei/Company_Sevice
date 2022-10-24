@@ -2,6 +2,7 @@ package com.optimagrowth.license.config;
 
 import org.keycloak.adapters.KeycloakConfigResolver;
 import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;
+import org.keycloak.adapters.springsecurity.KeycloakConfiguration;
 import org.keycloak.adapters.springsecurity.KeycloakSecurityComponents;
 import org.keycloak.adapters.springsecurity.authentication.KeycloakAuthenticationProvider;
 import org.keycloak.adapters.springsecurity.client.KeycloakClientRequestFactory;
@@ -26,6 +27,8 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
 @ComponentScan(basePackageClasses = KeycloakSecurityComponents.class)
 public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 
+    @Autowired
+    public KeycloakClientRequestFactory keycloakClientRequestFactory;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -48,6 +51,14 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
         return new RegisterSessionAuthenticationStrategy(new SessionRegistryImpl());
     }
 
+    @Bean
+    @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+    public KeycloakRestTemplate keycloakRestTemplate() {
+        return new KeycloakRestTemplate(keycloakClientRequestFactory);
+    }
 
-
+    @Bean
+    public KeycloakConfigResolver KeycloakConfigResolver() {
+        return new KeycloakSpringBootConfigResolver();
+    }
 }

@@ -102,5 +102,5 @@ keycloak:
   realm: spmia-realm
   bearer-only: 'true'
   use-resource-role-mappings: 'true'
-  ssl-required: external
+  ssl-required: none
   resource: ostock

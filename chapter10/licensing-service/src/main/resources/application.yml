@@ -3,3 +3,6 @@ spring:
     name: licensing-service
   main:
     allow-circular-references: true
+
+gateway:
+  port: 9095

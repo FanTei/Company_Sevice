@@ -4,3 +4,6 @@ spring:
       uri: http://localhost:9091
   config:
     import: "optional:configserver:"
+
+gateway:
+  service-name: localhost

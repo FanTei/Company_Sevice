@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: organization-service
+
+logging:
+  level:
+    org.springframework.web: WARN
+    com.optimagrowth: DEBUG

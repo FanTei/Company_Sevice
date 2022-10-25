@@ -1,14 +1,3 @@
 spring:
-  cloud:
-    gateway:
-      x-forwarded:
-        port-enabled: false
-        host-enabled: false
-        proto-enabled: false
-        port-append: false
-        host-append: false
-        proto-append: false
-        enabled: false
   application:
     name: gateway-server
-

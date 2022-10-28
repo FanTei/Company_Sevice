@@ -3,4 +3,4 @@ example:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:9092/eureka/
+      defaultZone: http://localhost:9999/eureka/

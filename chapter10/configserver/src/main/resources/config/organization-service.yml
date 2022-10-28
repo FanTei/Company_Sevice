@@ -16,11 +16,19 @@ spring:
     validationQuery: SELECT 1
     platform: postgres
   cloud:
+    stream:
+      kafka:
+        binder:
+          replication-factor: 1
+      bindings:
+        output:
+          destination: orgChangeTopic
+          content-type: application/json
     loadbalancer:
       ribbon:
         enabled: 'false'
   database:
-    driverClassName: org.postgresql.Driver
+    driverClassName: org.postgresql.Drive
 
 eureka:
   instance:
@@ -103,3 +111,6 @@ keycloak:
   use-resource-role-mappings: 'true'
   ssl-required: none
   resource: ostock
+
+
+

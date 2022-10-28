@@ -16,6 +16,10 @@ spring:
     validationQuery: SELECT 1
     platform: postgres
   cloud:
+    stream:
+      kafka:
+        binder:
+          replication-factor: 1
     loadbalancer:
       ribbon:
         enabled: 'false'

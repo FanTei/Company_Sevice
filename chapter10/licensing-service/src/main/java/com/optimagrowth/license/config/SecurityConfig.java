@@ -1,5 +1,6 @@
 package com.optimagrowth.license.config;
 
+import lombok.Getter;
 import org.keycloak.adapters.KeycloakConfigResolver;
 import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;
 import org.keycloak.adapters.springsecurity.KeycloakConfiguration;
@@ -9,6 +10,7 @@ import org.keycloak.adapters.springsecurity.client.KeycloakClientRequestFactory;
 import org.keycloak.adapters.springsecurity.client.KeycloakRestTemplate;
 import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurerAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -27,8 +29,12 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
 @ComponentScan(basePackageClasses = KeycloakSecurityComponents.class)
 public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 
-    @Autowired
-    public KeycloakClientRequestFactory keycloakClientRequestFactory;
+
+    public final KeycloakClientRequestFactory keycloakClientRequestFactory;
+
+    public SecurityConfig(KeycloakClientRequestFactory keycloakClientRequestFactory) {
+        this.keycloakClientRequestFactory = keycloakClientRequestFactory;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

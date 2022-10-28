@@ -1,8 +1,15 @@
 spring:
+  redis:
+    port: 
+    host: localhost
   application:
     name: licensing-service
   main:
     allow-circular-references: true
-
 gateway:
   port: 9095
+
+logging:
+  level:
+    org.springframework.web: WARN
+    com.optimagrowth: DEBUG

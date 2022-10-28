@@ -1,16 +1,20 @@
 example:
   property: DEV
+
 spring:
   datasource:
     driverClassName: org.postgresql.Driver
     username: postgres
     url: jdbc:postgresql://database:5432/ostock_dev
     password: '0520'
-  jpa:
-    generate-ddl: 'true'
-    hibernate:
-      ddl-auto: create
+  cloud:
+    stream:
+      kafka:
+        binder:
+          zkNodes: kafka1
+          brokers: kafka1:9092
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://eurekaserver:9092/eureka/
+      defaultZone: http://eurekaserver:9999/eureka/
+

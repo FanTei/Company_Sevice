@@ -23,10 +23,11 @@ public class OrganizationRestTemplateClient {
     private String gatewayServiceName;
     private final KeycloakRestTemplate restTemplate;
 
-//    private final OrganizationRedisRepository redisRepository;
+    private final OrganizationRedisRepository redisRepository;
 
-    public OrganizationRestTemplateClient(KeycloakRestTemplate restTemplate) {
+    public OrganizationRestTemplateClient(KeycloakRestTemplate restTemplate, OrganizationRedisRepository redisRepository) {
         this.restTemplate = restTemplate;
+        this.redisRepository = redisRepository;
     }
 
     public Organization getOrganization(String organizationId) {
@@ -50,20 +51,19 @@ public class OrganizationRestTemplateClient {
     }
 
     private Organization checkRedisCache(String organizationId) {
-//        try {
-//            return redisRepository.findById(organizationId).orElse(null);
-//        } catch (Exception ex) {
-//            logger.error("Error encountered while trying to retrieve organization {} check Redis Cache.  Exception {}", organizationId, ex);
-//            return null;
-//        }
-        return null;
+        try {
+            return redisRepository.findById(organizationId).orElse(null);
+        } catch (Exception ex) {
+            logger.error("Error encountered while trying to retrieve organization {} check Redis Cache.  Exception {}", organizationId, ex);
+            return null;
+        }
     }
 
     private void cacheOrganizationObject(Organization organization) {
-//        try {
-//            redisRepository.save(organization);
-//        } catch (Exception ex) {
-//            logger.error("Unable to cache organization {} in Redis. Exception {}", organization.getId(), ex);
-//        }
+        try {
+            redisRepository.save(organization);
+        } catch (Exception ex) {
+            logger.error("Unable to cache organization {} in Redis. Exception {}", organization.getId(), ex);
+        }
     }
 }

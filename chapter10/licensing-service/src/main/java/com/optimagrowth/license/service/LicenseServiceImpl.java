@@ -7,7 +7,6 @@ import com.optimagrowth.license.repository.LicenseRepository;
 import com.optimagrowth.license.service.client.OrganizationDiscoveryClient;
 import com.optimagrowth.license.service.client.OrganizationFeignClient;
 import com.optimagrowth.license.service.client.OrganizationRestTemplateClient;
-import com.optimagrowth.license.utils.UserContext;
 import com.optimagrowth.license.utils.UserContextHolder;
 import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
@@ -66,7 +65,7 @@ public class LicenseServiceImpl implements LicenseService {
             license.setContactPhone(organization.getContactPhone());
         }
 
-        return license.withComment(config.getExampleProperty());
+        return license.withComment(config.getProperty());
     }
 
     private Organization retrieveOrganizationInfo(String organizationId, String clientType) {
@@ -97,13 +96,13 @@ public class LicenseServiceImpl implements LicenseService {
         license.setLicenseId(UUID.randomUUID().toString());
         licenseRepository.save(license);
 
-        return license.withComment(config.getExampleProperty());
+        return license.withComment(config.getProperty());
     }
 
     public License updateLicense(License license) {
         licenseRepository.save(license);
 
-        return license.withComment(config.getExampleProperty());
+        return license.withComment(config.getProperty());
     }
 
     public String deleteLicense(String licenseId) {
@@ -121,7 +120,7 @@ public class LicenseServiceImpl implements LicenseService {
     @Retry(name = "retryLicenseService",fallbackMethod = "buildFallbackLicenseList" )
     @RateLimiter(name = "licenseService",fallbackMethod = "buildFallbackLicenseList")
     public List<License> getLicensesByOrganization(String organizationId) throws TimeoutException {
-        logger.debug("getLicensesByOrganization Correlation id: {}", UserContext.getCorrelationId());
+        logger.debug("getLicensesByOrganization Correlation id: {}", UserContextHolder.getContext().getCorrelationId());
         randomlyRunLong();
         return licenseRepository.findByOrganizationId(organizationId);
     }

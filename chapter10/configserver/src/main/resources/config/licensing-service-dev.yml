@@ -21,6 +21,3 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://eurekaserver:9999/eureka/
-
-redis:
-  server: redisserver

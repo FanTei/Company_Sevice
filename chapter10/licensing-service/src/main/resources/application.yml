@@ -1,7 +1,4 @@
 spring:
-  redis:
-    port: 
-    host: localhost
   application:
     name: licensing-service
   main:
@@ -13,3 +10,7 @@ logging:
   level:
     org.springframework.web: WARN
     com.optimagrowth: DEBUG
+
+redis:
+  port: 6379
+  host: redis

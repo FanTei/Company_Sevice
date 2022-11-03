@@ -1,6 +1,0 @@
-example:
-  property: DEV
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://eurekaserver:9092/eureka/

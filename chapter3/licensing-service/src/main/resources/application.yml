@@ -1,7 +1,0 @@
-server:
-  port: 9090
-management:
-  endpoint:
-    health:
-      show-components: always
-      show-details: always

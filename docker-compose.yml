@@ -77,7 +77,25 @@ services:
       - "9094:9094"
     networks:
       - backend
-
+  gatewayserver:
+    build:
+      context: gatewayserver
+      dockerfile: Dockerfile
+    ports:
+      - "9095:9095"
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+    depends_on:
+      database:
+        condition: service_healthy
+      configserver:
+        condition: service_started
+      eurekaserver:
+        condition: service_started
+    networks:
+      backend:
+        aliases:
+          - "gateway"
   keycloak:
     image: jboss/keycloak
     restart: always
@@ -132,14 +150,6 @@ services:
       KAFKA_CREATE_TOPICS: dresses:1:1,ratings:1:1
       #KAFKA_LOG4J_ROOT_LOGLEVEL: INFO
       KAFKA_JMX_PORT: 9991
-  redisserver:
-    image: redis:alpine
-    ports:
-      - 6379:6379
-    networks:
-      backend:
-        aliases:
-          - "redis"
 
 networks:
   backend:

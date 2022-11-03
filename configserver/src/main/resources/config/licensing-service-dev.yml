@@ -10,8 +10,8 @@ spring:
           content-type: application/json
       kafka:
         binder:
-          zkNodes: kafka1
-          brokers: kafka1:9092
+          zkNodes: kafka1:19092
+          brokers: kafka1:19092
   datasource:
     username: postgres
     url: jdbc:postgresql://database:5432/ostock_dev

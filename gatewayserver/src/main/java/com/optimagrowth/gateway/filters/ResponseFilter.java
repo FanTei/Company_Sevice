@@ -13,10 +13,12 @@ import reactor.core.publisher.Mono;
 @Configuration
 public class ResponseFilter {
 
-    final Logger logger =LoggerFactory.getLogger(ResponseFilter.class);
+    private final Logger logger = LoggerFactory.getLogger(ResponseFilter.class);
+    final private FilterUtils filterUtils;
 
-    @Autowired
-    FilterUtils filterUtils;
+    public ResponseFilter(FilterUtils filterUtils) {
+        this.filterUtils = filterUtils;
+    }
 
     @Bean
     public GlobalFilter postGlobalFilter() {

@@ -7,7 +7,7 @@ import com.optimagrowth.license.repository.LicenseRepository;
 import com.optimagrowth.license.service.client.OrganizationDiscoveryClient;
 import com.optimagrowth.license.service.client.OrganizationFeignClient;
 import com.optimagrowth.license.service.client.OrganizationRestTemplateClient;
-import com.optimagrowth.license.utils.UserContextHolder;
+import com.optimagrowth.license.utils.UserContext;
 import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
@@ -18,11 +18,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.TimeoutException;
-import org.slf4j.Logger;
 
+import org.slf4j.Logger;
 
 
 @Service
@@ -41,6 +40,7 @@ public class LicenseServiceImpl implements LicenseService {
 
     private final OrganizationDiscoveryClient organizationDiscoveryClient;
     private static final Logger logger = LoggerFactory.getLogger(LicenseService.class);
+
     public LicenseServiceImpl(MessageSource messages, LicenseRepository licenseRepository, ServiceConfig config, OrganizationFeignClient organizationFeignClient,
                               OrganizationRestTemplateClient organizationRestClient, OrganizationDiscoveryClient organizationDiscoveryClient) {
         this.messages = messages;
@@ -72,21 +72,19 @@ public class LicenseServiceImpl implements LicenseService {
         Organization organization = null;
 
         switch (clientType) {
-            case "feign":
+            case "feign" -> {
                 System.out.println("I am using the feign client");
                 organization = organizationFeignClient.getOrganization(organizationId);
-                break;
-            case "rest":
+            }
+            case "rest" -> {
                 System.out.println("I am using the rest client");
                 organization = organizationRestClient.getOrganization(organizationId);
-                break;
-            case "discovery":
+            }
+            case "discovery" -> {
                 System.out.println("I am using the discovery client");
                 organization = organizationDiscoveryClient.getOrganization(organizationId);
-                break;
-            default:
-                organization = organizationRestClient.getOrganization(organizationId);
-                break;
+            }
+            default -> organization = organizationRestClient.getOrganization(organizationId);
         }
 
         return organization;
@@ -115,17 +113,17 @@ public class LicenseServiceImpl implements LicenseService {
 
     }
 
-    @CircuitBreaker(name = "licenseService",fallbackMethod = "buildFallbackLicenseList")
-    @Bulkhead(name = "bulkheadLicenseService",fallbackMethod = "buildFallbackLicenseList")
-    @Retry(name = "retryLicenseService",fallbackMethod = "buildFallbackLicenseList" )
-    @RateLimiter(name = "licenseService",fallbackMethod = "buildFallbackLicenseList")
+    @CircuitBreaker(name = "licenseService", fallbackMethod = "buildFallbackLicenseList")
+    @Bulkhead(name = "bulkheadLicenseService", fallbackMethod = "buildFallbackLicenseList")
+    @Retry(name = "retryLicenseService", fallbackMethod = "buildFallbackLicenseList")
+    @RateLimiter(name = "licenseService", fallbackMethod = "buildFallbackLicenseList")
     public List<License> getLicensesByOrganization(String organizationId) throws TimeoutException {
-        logger.debug("getLicensesByOrganization Correlation id: {}", UserContextHolder.getContext().getCorrelationId());
-        randomlyRunLong();
+        logger.debug("getLicensesByOrganization Correlation id: {}", UserContext.getCorrelationId());
         return licenseRepository.findByOrganizationId(organizationId);
     }
+
     @SuppressWarnings("unused")
-    private List<License> buildFallbackLicenseList(String organizationId, Throwable t){
+    private List<License> buildFallbackLicenseList(String organizationId, Throwable t) {
         List<License> fallbackList = new ArrayList<>();
         License license = new License();
         license.setLicenseId("0000000-00-00000");
@@ -133,21 +131,5 @@ public class LicenseServiceImpl implements LicenseService {
         license.setProductName("Sorry no licensing information currently available");
         fallbackList.add(license);
         return fallbackList;
-    }
-
-    private void randomlyRunLong() throws TimeoutException {
-        Random rand = new Random();
-        int randomNum = rand.nextInt(3) + 1;
-        if (randomNum==3) sleep();
-    }
-
-    private void sleep() throws TimeoutException{
-        try {
-            System.out.println("Sleep");
-            Thread.sleep(5000);
-            throw new java.util.concurrent.TimeoutException();
-        } catch (InterruptedException e) {
-            logger.error(e.getMessage());
-        }
     }
 }

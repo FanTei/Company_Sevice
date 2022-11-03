@@ -1,7 +1,8 @@
 package com.optimagrowth.license.utils;
 
+import lombok.Getter;
 import org.springframework.util.Assert;
-
+@Getter
 public class UserContextHolder {
     private static final ThreadLocal<UserContext> userContext = new ThreadLocal<UserContext>();
 
